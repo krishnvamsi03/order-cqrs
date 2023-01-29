@@ -19,6 +19,7 @@
         <module>orders</module>
         <module>customer</module>
         <module>order-core</module>
+        <module>order-common</module>
     </modules>
 
     <properties>

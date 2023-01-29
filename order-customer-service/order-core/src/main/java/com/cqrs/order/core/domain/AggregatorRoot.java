@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AggregatorRoot {
 
-    private String id;
+    protected String id;
     private int version = -1;
 
     private List<BaseEvent> changes = new LinkedList<>();
