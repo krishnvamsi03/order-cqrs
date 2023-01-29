@@ -10,7 +10,6 @@ import java.util.Base64;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
 public class OrderCancelledEvent extends BaseEvent {
 }
