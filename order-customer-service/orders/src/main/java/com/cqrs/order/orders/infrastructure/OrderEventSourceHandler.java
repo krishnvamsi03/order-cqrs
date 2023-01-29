@@ -28,7 +28,7 @@ public class OrderEventSourceHandler implements EventSourceHandler {
     public OrderAggregate getById(String id) {
         OrderAggregate root = new OrderAggregate();
         List<BaseEvent> events = eventStore.getEvents(id);
-        if (events != null || events.size() == 0) {
+        if (events != null || events.size() > 0) {
             root.replayEvents(events);
             int latestVersion =
                     events.stream().map(x -> x.getVersion()).max(Comparator.naturalOrder()).get();

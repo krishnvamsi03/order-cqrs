@@ -56,7 +56,7 @@ public class OrderEventStore implements EventStore {
     public List<BaseEvent> getEvents(String aggregateId) {
         List<EventModel> prevEvents =
                 eventStoreRepository.findByAggregateId(aggregateId);
-        if (prevEvents != null || prevEvents.size() != 0) {
+        if (prevEvents == null || prevEvents.size() == 0) {
             throw new RuntimeException("No events found for aggregate id");
         }
         return prevEvents.stream().map(x -> x.getEventData()).collect(Collectors.toList());
@@ -65,7 +65,7 @@ public class OrderEventStore implements EventStore {
     @Override
     public List<String> getAggregateIds() {
         List<EventModel> prevEvents = eventStoreRepository.findAll();
-        if (prevEvents != null || prevEvents.size() != 0) {
+        if (prevEvents == null || prevEvents.size() == 0) {
             throw new RuntimeException("No events");
         }
         return prevEvents.stream().map(x -> x.getAggregateId()).collect(Collectors.toList());

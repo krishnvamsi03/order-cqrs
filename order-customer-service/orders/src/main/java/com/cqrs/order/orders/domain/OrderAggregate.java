@@ -35,7 +35,7 @@ public class OrderAggregate extends AggregatorRoot {
             throw new IllegalArgumentException("Aggregate is not active");
         }
         raiseEvent(OrderAcceptedEvent.builder()
-                .id(command.getId())
+                .id(this.id)
                 .build());
     }
 
@@ -50,6 +50,7 @@ public class OrderAggregate extends AggregatorRoot {
         }
 
         raiseEvent(OrderRejectedEvent.builder()
+                .id(this.id)
                 .reason(command.getReason())
                 .build());
     }
@@ -57,6 +58,7 @@ public class OrderAggregate extends AggregatorRoot {
     public void apply(OrderRejectedEvent event) {
         this.id = event.getId();
         this.isActive = false;
+        this.rejectedReason = event.getReason();
     }
 
     public void cancelOrder(OrderCancelCommand command) {
@@ -64,7 +66,7 @@ public class OrderAggregate extends AggregatorRoot {
             throw new IllegalArgumentException("Aggregate is not active");
         }
         raiseEvent(OrderCancelledEvent.builder()
-                .id(command.getId())
+                .id(this.id)
                 .build());
     }
 
@@ -77,8 +79,8 @@ public class OrderAggregate extends AggregatorRoot {
         if (!isActive) {
             throw new IllegalArgumentException("Aggregate is not active");
         }
-        raiseEvent(OrderCancelledEvent.builder()
-                .id(command.getId()).build());
+        raiseEvent(OrderDeliveredEvent.builder()
+                .id(this.id).build());
     }
 
     public void apply(OrderDeliveredEvent event) {
